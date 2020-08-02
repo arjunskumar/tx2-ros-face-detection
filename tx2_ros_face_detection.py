@@ -39,11 +39,11 @@ class image_converter:
       print(e)
 
 def main(args):
-  rospy.init_node('cropped_image', anonymous=True)
+  rospy.init_node('tx2_ros_face_detection', anonymous=True)
 
   topic = '/csi_cam/image_raw' #change zed_topic here
 
-  cropped_image = image_converter(topic)
+  img = image_converter(topic)
   try:
     rospy.spin()
   except KeyboardInterrupt:
