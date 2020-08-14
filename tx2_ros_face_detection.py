@@ -21,11 +21,11 @@ class image_converter:
       cv_image = self.bridge.imgmsg_to_cv2(data, "bgr8")
     except CvBridgeError as e:
       print(e)
-    crackCascade = cv2.CascadeClassifier('haarcascade_frontalface_default.xml')
+    faceCascade = cv2.CascadeClassifier('haarcascade_frontalface_default.xml')
     cv_image =cv2.flip(cv_image,-1)
-    cracks = crackCascade.detectMultiScale(cv_image,scaleFactor=1.1,minNeighbors=5,minSize=(100, 100),flags = 0)
-    if(len(cracks)):
-		for (x, y, w, h) in cracks:
+    faces = faceCascade.detectMultiScale(cv_image,scaleFactor=1.1,minNeighbors=5,minSize=(100, 100),flags = 0)
+    if(len(faces)):
+		for (x, y, w, h) in faces:
 			cv2.rectangle(cv_image, (x, y), (x+w, y+h), (0, 255, 0), 2)
    # gray_image = cv2.cvtColor(cv_image, cv2.COLOR_RGB2GRAY)
    # haar_face = gray_image[0:300, 0:220]
@@ -41,7 +41,7 @@ class image_converter:
 def main(args):
   rospy.init_node('tx2_ros_face_detection', anonymous=True)
 
-  topic = '/csi_cam/image_raw' #change zed_topic here
+  topic = '/csi_cam/image_raw' #change camera_topic here
 
   img = image_converter(topic)
   try:
